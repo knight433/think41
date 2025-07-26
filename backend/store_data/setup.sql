@@ -86,3 +86,23 @@ CREATE TABLE dev.users (
   traffic_source TEXT,
   created_at     TIMESTAMP NOT NULL
 );
+
+
+Create scheam con;
+
+CREATE TABLE con.conversations (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES dev.users(id) ON DELETE CASCADE,
+    title TEXT,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+
+CREATE TABLE con.messages (
+    id SERIAL PRIMARY KEY,
+    conversation_id INTEGER NOT NULL REFERENCES con.conversations(id) ON DELETE CASCADE,
+    sender TEXT CHECK (sender IN ('user', 'bot')) NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
